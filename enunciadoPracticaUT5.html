@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Gestor de estudiantes y cursos</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <hr>
+<h2 id="title-práctica-entregable-ut5-servidorauthor-jose-medinadate-dategeometry-margin2cmoutput-pdf_document">title: &quot;Práctica entregable UT5 Servidor&quot;
+author: Jose Medina
+date: $date
+geometry: margin=2cm
+output: pdf_document</h2>
+<h2 id="gestor-de-estudiantes-y-cursos">Gestor de estudiantes y cursos</h2>
+<p>Vamos a realizar una aplicación en parejas que lleve a cabo la gestión de diferentes estudiantes y cursos, donde podremos crear, modificar y ver estudiantes y sus matrículas en diferentes cursos.
+Para ello emplearemos la arquitectura MVC y la POO.</p>
+<h2 id="estructura-de-directorios">Estructura de directorios</h2>
+<p>Ya que estamos estudiando MVC, usaremos la siguiente estructura de carpetas:</p>
+<pre><code>App
+|
+| ── controllers
+|   |──EstudianteController.php
+|   |──CursoController.php
+|	|──MatriculaController.php
+|── models
+|   |──Estudiante.php
+|	|──Curso.php
+|	|──Matricula.php
+|── views
+|	|──estudiantes
+|	|	|──listado.php
+|	|	|──formulario.php
+|	|	|──detalle.php
+|	|	|──editar.php
+|	|──cursos
+|	|	|──listado
+|	|	|──formulario.php
+|	|	|──detalle.php
+|	|	|──editar.php
+|	|──matriculas
+|	|	|──inscripcion.php
+|	|	|──listado.php
+|	|──home.html
+|──index.php
+</code></pre>
+<h2 id="requisitos-funcionales">Requisitos funcionales</h2>
+<h3 id="1-gestión-de-estudiantes">1. Gestión de estudiantes</h3>
+<ul>
+<li>Tenemos que crear un estudiante con:
+<ul>
+<li>Nombre</li>
+<li>Apellidos</li>
+<li>NIA</li>
+<li>Edad</li>
+</ul>
+</li>
+<li>Podremos ver el listado de estudiantes inscritos</li>
+<li>Podremos ver en detalle un estudiante concreto</li>
+<li>Podremos editar la información de un estudiante concreto (menos su NIA)</li>
+<li>Podremos eliminar un estudiante</li>
+</ul>
+<h3 id="2-gestión-de-cursos">2. Gestión de cursos</h3>
+<ul>
+<li>Tenemos que crear un curso con:
+<ul>
+<li>id del curso</li>
+<li>Nombre del curso</li>
+<li>Descripción</li>
+<li>Capacidad máxima</li>
+</ul>
+</li>
+<li>Podremos ver el listado de cursos (solo los ids y nombres)</li>
+<li>Podremos ver el detalle de un curso (toda la información)</li>
+<li>Podremos editar los datos de un curso (menos su id)</li>
+<li>Podremos eliminar un curso</li>
+</ul>
+<h3 id="3-gestión-de-matrículas-opcional-2-puntos-extra">3. Gestión de matrículas (Opcional 2 Puntos extra)</h3>
+<ul>
+<li>Tenemos que crear una matrícula con:
+<ul>
+<li>id de matrícula</li>
+<li>nia de estudiante</li>
+<li>id del curso</li>
+<li>fecha de matrícula (por defecto es el día de instanciación de la matrícula)</li>
+</ul>
+</li>
+<li>Tenemos que permitir inscribir estudiantes en cursos (si hay cupo disponible y no están ya inscritos)</li>
+<li>Podremos ver los cursos en los que está inscrito un estudiante</li>
+<li>Podremos ver los estudiantes inscritos en un curso</li>
+</ul>
+<h3 id="4-punto-de-acceso-común">4. Punto de acceso común</h3>
+<ul>
+<li>Habrá un controlador principal (index.php) que será nuestro único punto de entrada para gestionar las solicitudes HTTP (todas).</li>
+<li>Usará las variables <strong>GET</strong> para saber que controlador y métodos utilizar.</li>
+<li>Manejará la inicialización de sesiones.</li>
+<li>Cargará por defecto la vista de home.php</li>
+</ul>
+<h3 id="5-vista-homephp">5. Vista home.php</h3>
+<p>Será la página inicial de selección de acciones a tomar, básicamente consistirá en un formulario que hará una petición a cada uno de los controladores con su especificación (por ejemplo, un botón pedirá al controlador de estudiantes que gestione el mostrado del listado).</p>
+<h2 id="requisitos-no-funcionales">Requisitos no funcionales</h2>
+<ul>
+<li>Vais a utilizar sesiones para almacenar la información que en otro caso hubiese estado en una base de datos.</li>
+<li>Vais a separar la lógica de negocio, las vistas y el controlador.</li>
+<li>Los identificadores de cada clase no podrán modificarse con el tiempo, son constantes o de solo lectura.</li>
+<li>No es necesario usar autocarga de clases, aunque podéis hacerlo</li>
+</ul>
+<h2 id="formato-de-entrega">Formato de entrega</h2>
+<p>Se busca que entreguéis un documento llamado memoria.pdf donde aparezca la explicación del flujo de información en la aplicación, se expliquen por qué se separan la lógica de negocio de las vistas y los modelos y las ventajas que esto puede traer. También hay que añadir un apartado donde se investigará en qué nos puede ayudar un framework en lugar de hacerlo con el lenguaje base.
+El trabajo se realizará en parejas y debe tener capturas y comentarios de cada parte del proyecto, la idea es que entendáis el código, lo completeis y al explicarlo lo interioriceis.</p>
+
+            <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+            
+        </body>
+        </html>
