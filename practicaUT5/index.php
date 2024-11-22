@@ -2,6 +2,9 @@
 //tenéis que poner los require delante de la sesión, porque como metemos los objetos en la sesión tiene que saber deserializarlos
 require_once __DIR__ . '/models/Estudiante.php';
 require_once __DIR__ . '/controllers/EstudianteController.php';
+require_once __DIR__ . '/models/Curso.php';
+require_once __DIR__ . '/controllers/CursoController.php';
+
 
 session_start();
 
