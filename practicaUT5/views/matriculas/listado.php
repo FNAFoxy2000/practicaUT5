@@ -20,14 +20,17 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($Matriculas as $matricula): ?>
+            <?php foreach ($matriculas as $matricula): ?>
                 <tr>
                     <td><?=  $matricula->id ?></td>
                     <td><?=  $matricula->niaEstudiante ?></td>
                     <td><?=  $matricula->idCurso ?></td>
-                    <td><?=  $matricula->fecha?></td>
+                    <td><?=  $matricula->fecha->format("Y-m-d")?></td>
                     <td>
-                        <a href="index.php?controller=matricula&action=detalle&id=<?=$matricula->id?>">Detalle</a>
+                        <a href="index.php?controller=matricula&action=detalleEstudiante&id=<?=$matricula->niaEstudiante?>">Detalle Estudiante</a>
+                    </td>
+                    <td>
+                        <a href="index.php?controller=matricula&action=detalleCurso&id=<?=$matricula->idCurso?>">Detalle Curso</a>
                     </td>
                     <td>
                         <a href="index.php?controller=matricula&action=eliminar&id=<?= $matricula->id?>">Eliminar</a>

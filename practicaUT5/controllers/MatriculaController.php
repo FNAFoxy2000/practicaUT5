@@ -10,18 +10,17 @@ class MatriculaController
 
     public function crear()
     {
-        require_once __DIR__ . "/../views/matriculas/formulario.php";
+        require_once __DIR__ . "/../views/matriculas/inscripcion.php";
     }
 
     public function guardar()
     {
         try {
             //Validar los datos recibidos por POST
-            if (isset($_POST["id"], $_POST["niaEstudiante"], $_POST["idCurso"], $_POST["fecha"])) {
+            if (isset($_POST["id"], $_POST["niaEstudiante"], $_POST["idCurso"])) {
                 $id = (int)$_POST["id"];
                 $niaEstudiante = $_POST["niaEstudiante"];
                 $idCurso = $_POST["idCurso"];
-                $fecha = (int)$_POST["fecha"];
                 $matricula_buscado = Matricula::buscarPorId($id);
                 $niaEstudiante_buscado = Estudiante::buscarPorNIA($niaEstudiante);
                 $idCurso_buscado = Curso::buscarPorId($idCurso);
@@ -29,31 +28,33 @@ class MatriculaController
                 if ($matricula_buscado) { //Si ya existe el matricula
                     throw new Exception("La matrícula ya existe.");
                     // Matricula::editar($id, $niaEstudiante, $idCurso);
-                } else if ($niaEstudiante_buscado && $idCurso_buscado) {
-                    $matriculas = Matricula::obtenerTodos();
-                    //Se comprueba que el alumno no esté en el curso
-                    $contAlumnosCurso = 0;
-                    foreach($matriculas as $matricula){
-                        if($matricula["niaEstudiante"] == $niaEstudiante_buscado && $matricula["idCurso"] == $idCurso_buscado){
-                            throw new Exception("El estudiante ya pertenece a ese curso");
-                        }
-                        //Se comprueba que ese curso tenga espacio 
-                        if($matricula["idCurso"] == $idCurso_buscado){
-                            $contAlumnosCurso++;
-                        }
-                        
-                    }
-                    // obtener la capacidad del curso                       
-                    $cur = $this->obtenerCurso($idCurso_buscado);
-                    if($contAlumnosCurso > $cur->capacidadMaxima){
-                        throw new Exception("El curso está completo. Capacidad máxima: " . $cur->capacidadMaxima);
-                    }
-                    
-
-                    //Se crea un nuevo matricula
-                    $matricula = new Matricula($id, $niaEstudiante, $idCurso);
-                    Matricula::guardar($matricula);
+                } else if (!$niaEstudiante_buscado) {
+                    throw new Exception("Estudiante no existe.");
+                } else if (!$idCurso_buscado) {
+                    throw new Exception("El curso no existe.");
                 }
+                $matriculas = Matricula::obtenerTodos();
+                //Se comprueba que el alumno no esté en el curso
+                $contAlumnosCurso = 0;
+                foreach ($matriculas as $matricula) {
+                    if ($matricula->niaEstudiante == $niaEstudiante_buscado && $matricula->idCurso == $idCurso_buscado) {
+                        throw new Exception("El estudiante ya pertenece a ese curso");
+                    }
+                    //Se comprueba que ese curso tenga espacio 
+                    if ($matricula->idCurso == $idCurso_buscado) {
+                        $contAlumnosCurso++;
+                    }
+                }
+                // obtener la capacidad del curso                       
+                $cur = $this->obtenerCurso($idCurso_buscado);
+                if ($contAlumnosCurso > $cur->capacidadMaxima) {
+                    throw new Exception("El curso está completo. Capacidad máxima: " . $cur->capacidadMaxima);
+                }
+
+
+                //Se crea un nuevo matricula
+                $matricula = new Matricula($id, $niaEstudiante, $idCurso);
+                Matricula::guardar($matricula);
                 //Redirigir al listado de matriculas
                 header("Location: index.php?controller=matricula&action=index");
                 exit;
@@ -70,8 +71,8 @@ class MatriculaController
     public function obtenerCurso($idCurso_buscado)
     {
         $cursos = Curso::obtenerTodos();
-        foreach($cursos as $cur){
-            if($cur->id == $idCurso_buscado){
+        foreach ($cursos as $cur) {
+            if ($cur->id == $idCurso_buscado) {
                 return $cur;
             }
         }

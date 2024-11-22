@@ -4,6 +4,9 @@ require_once __DIR__ . '/models/Estudiante.php';
 require_once __DIR__ . '/controllers/EstudianteController.php';
 require_once __DIR__ . '/models/Curso.php';
 require_once __DIR__ . '/controllers/CursoController.php';
+require_once __DIR__ . '/models/Matricula.php';
+require_once __DIR__ . '/controllers/MatriculaController.php';
+
 
 
 session_start();

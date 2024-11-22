@@ -3,12 +3,13 @@ class Matricula{
     public $id;
     public $niaEstudiante;
     public $idCurso;
-    public $fecha = (new DateTime())->format('Y-m-d');
+    public $fecha;
 
     public function __construct($id, $niaEstudiante, $idCurso){
         $this->id = $id;
         $this->niaEstudiante = $niaEstudiante;
         $this->idCurso = $idCurso;
+        $this->fecha = new DateTime();
     }
     
     public static function obtenerTodos() {
