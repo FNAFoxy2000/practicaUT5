@@ -106,18 +106,34 @@ class MatriculaController
         header("Location: index.php?controller=matricula&action=index");
     }
 
-    public function detalle()
-    {
-        if (!isset($_GET["id"])) {
+    public function detalleCurso(){
+        if (!isset($_GET["idCurso"])) {
             echo "Error: No se ha proporcionado un ID válido.";
             return;
         }
+        
+        $idCurso = $_GET["idCurso"];
+        $matriculas = Matricula::obtenerTodos();
 
-        $id = $_GET["id"];
-        $matricula = Matricula::buscarPorId($id);
+        if ($matriculas) {
+            require_once __DIR__ . "/../views/matriculas/detalleCurso.php";
+        } else {
+            echo "Error: Matricula no encontrado.";
+        }
+    }
 
-        if ($matricula) {
-            require_once __DIR__ . "/../views/matriculas/detalle.php";
+    public function detalleEstudiante()
+    {
+        if (!isset($_GET["niaEstudiante"])) {
+            echo "Error: No se ha proporcionado un NIA válido.";
+            return;
+        }
+        
+        $niaEstudiante = $_GET["niaEstudiante"];
+        $matriculas = Matricula::obtenerTodos();
+
+        if ($matriculas) {
+            require_once __DIR__ . "/../views/matriculas/detalleEstudiante.php";
         } else {
             echo "Error: Matricula no encontrado.";
         }
