@@ -28,7 +28,7 @@ class CursoController {
                     Curso::guardar($curso);
                 }
                 //Redirigir al listado de cursos
-                header("Location: index.php?controller=curso?action=index");
+                header("Location: index.php?controller=curso&action=index");
                 exit;
             } else {
                 throw new Exception("Faltan datos del formulario.");
