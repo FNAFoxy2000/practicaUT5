@@ -27,7 +27,7 @@
                 <a href="index.php?controller=curso&action=editar&id=<?php echo $curso->id; ?>">Editar</a>
             </td>
             <td>
-                <a href="index.php?controller=curso&action=eliminar&id=<?php echo $curso->id; ?>">Editar</a>
+                <a href="index.php?controller=curso&action=eliminar&id=<?php echo $curso->id; ?>">Eliminar</a>
             </td>
         </tr>
     </table>
