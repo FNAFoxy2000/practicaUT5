@@ -22,15 +22,15 @@ class MatriculaController
                 $niaEstudiante = $_POST["niaEstudiante"];
                 $idCurso = $_POST["idCurso"];
                 $matricula_buscado = Matricula::buscarPorId($id);
-                $niaEstudiante_buscado = Estudiante::buscarPorNIA($niaEstudiante);
-                $idCurso_buscado = Curso::buscarPorId($idCurso);
+                $estudiante_buscado = Estudiante::buscarPorNIA($niaEstudiante);
+                $curso_buscado = Curso::buscarPorId($idCurso);
 
                 if ($matricula_buscado) { //Si ya existe el matricula
                     throw new Exception("La matrícula ya existe.");
                     // Matricula::editar($id, $niaEstudiante, $idCurso);
-                } else if (!$niaEstudiante_buscado) {
+                } else if (!$estudiante_buscado) {
                     throw new Exception("Estudiante no existe.");
-                } else if (!$idCurso_buscado) {
+                } else if (!$curso_buscado) {
                     throw new Exception("El curso no existe.");
                 }
                 $matriculas = Matricula::obtenerTodos();
@@ -46,9 +46,8 @@ class MatriculaController
                     }
                 }
                 // obtener la capacidad del curso                       
-                $cur = $this->obtenerCurso($idCurso);
-                if ($contAlumnosCurso >= $cur->capacidadMaxima) {
-                    throw new Exception("El curso está completo. Capacidad máxima: " . $cur->capacidadMaxima);
+                if ($contAlumnosCurso >= $curso_buscado->capacidadMaxima) {
+                    throw new Exception("El curso está completo. Capacidad máxima: " . $curso_buscado->capacidadMaxima);
                 }
 
 
@@ -65,16 +64,6 @@ class MatriculaController
             //Manejo de errores
             echo  "<h1>Error</h1>";
             echo "<p>" . htmlspecialchars($e->getMessage()) . "</p>";
-        }
-    }
-
-    public function obtenerCurso($idCurso_buscado)
-    {
-        $cursos = Curso::obtenerTodos();
-        foreach ($cursos as $cur) {
-            if ($cur->id == $idCurso_buscado) {
-                return $cur;
-            }
         }
     }
 
