@@ -16,7 +16,7 @@
                 <th>Nia Estudiante</th>
                 <th>Id Curso</th>
                 <th>Fecha</th>
-                
+                <th>Borrar</th>    
             </tr>
         </thead>
         <tbody>
@@ -28,12 +28,12 @@
                     <td><?=  $niaEstudiante ?></td>
                     <td><?=  $matri->idCurso ?></td>
                     <td><?=  $matri->fecha->format("Y-m-d")?></td>
-                    <td>
+                    <!-- <td>
                         <a href="index.php?controller=matricula&action=detalleEstudiante&niaEstudiante=<?=$niaEstudiante?>">Detalle Estudiante</a>
                     </td>
                     <td>
                         <a href="index.php?controller=matricula&action=detalleCurso&idCurso=<?=$matri->idCurso?>">Detalle Curso</a>
-                    </td>
+                    </td> -->
                     <td>
                         <a href="index.php?controller=matricula&action=eliminar&id=<?= $matri->id?>">Eliminar</a>
                     </td>
@@ -43,7 +43,7 @@
         </tbody>
 
     </table>
-    <button><a href="index.php?controller=estudiante">Al listado</a></button>
+    <button><a href="index.php?controller=matricula">Al listado</a></button>
     <button><a href="index.php">Al inicio</a></button>
 </body>
 
