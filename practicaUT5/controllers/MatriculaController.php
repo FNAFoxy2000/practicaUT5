@@ -40,14 +40,14 @@ class MatriculaController
                     if ($matricula->niaEstudiante === $niaEstudiante && $matricula->idCurso === $idCurso) {
                         throw new Exception("El estudiante ya pertenece a ese curso");
                     }
-                    //Se comprueba que ese curso tenga espacio 
-                    if ($matricula->idCurso == $idCurso) {
+                    //Se suma la cantidad de matriculas en ese curso (1 matricula = 1 estudiante)
+                    if ($matricula->idCurso === $idCurso) {
                         $contAlumnosCurso++;
                     }
                 }
                 // obtener la capacidad del curso                       
                 $cur = $this->obtenerCurso($idCurso);
-                if ($contAlumnosCurso > $cur->capacidadMaxima) {
+                if ($contAlumnosCurso >= $cur->capacidadMaxima) {
                     throw new Exception("El curso está completo. Capacidad máxima: " . $cur->capacidadMaxima);
                 }
 
