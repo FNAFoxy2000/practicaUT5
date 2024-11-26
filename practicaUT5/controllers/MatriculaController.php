@@ -37,16 +37,16 @@ class MatriculaController
                 //Se comprueba que el alumno no esté en el curso
                 $contAlumnosCurso = 0;
                 foreach ($matriculas as $matricula) {
-                    if ($matricula->niaEstudiante == $niaEstudiante_buscado && $matricula->idCurso == $idCurso_buscado) {
+                    if ($matricula->niaEstudiante === $niaEstudiante && $matricula->idCurso === $idCurso) {
                         throw new Exception("El estudiante ya pertenece a ese curso");
                     }
                     //Se comprueba que ese curso tenga espacio 
-                    if ($matricula->idCurso == $idCurso_buscado) {
+                    if ($matricula->idCurso == $idCurso) {
                         $contAlumnosCurso++;
                     }
                 }
                 // obtener la capacidad del curso                       
-                $cur = $this->obtenerCurso($idCurso_buscado);
+                $cur = $this->obtenerCurso($idCurso);
                 if ($contAlumnosCurso > $cur->capacidadMaxima) {
                     throw new Exception("El curso está completo. Capacidad máxima: " . $cur->capacidadMaxima);
                 }
