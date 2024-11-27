@@ -45,7 +45,7 @@ class MatriculaController
                         $contAlumnosCurso++;
                     }
                 }
-                // obtener la capacidad del curso                       
+                // Comprobar la capacidad del curso                       
                 if ($contAlumnosCurso >= $curso_buscado->capacidadMaxima) {
                     throw new Exception("El curso está completo. Capacidad máxima: " . $curso_buscado->capacidadMaxima);
                 }
