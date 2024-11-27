@@ -67,27 +67,6 @@ class MatriculaController
         }
     }
 
-    // public function editar(){
-    //     //Verificar que el Id está en la URL
-    //     if (isset($_GET["id"])){
-    //         $id = (int)$_GET["id"];
-    //         $matricula = Matricula::buscarPorId($id); //Buscamos al matricula por el ID del form
-
-    //         if($matricula){
-    //             // Si existe el matricula, lo pasamos a la vista
-    //             require_once __DIR__ . "/../views/matriculas/editar.php";//crear vista
-    //         } else {
-    //             //Si no existe el matricula, redirigimos al listado
-    //             header("Location: index.php?controller=matricula&action=index");
-    //             exit;
-    //         }
-    //     } else {
-    //         //Si no se ha proporcionado un Id válido, redirigmos al listado
-    //         header("Location: index.php?controller=matricula&action=index");
-    //         exit;
-    //     }
-    // }
-
     public function eliminar()
     {
         $id = (int)$_GET["id"];

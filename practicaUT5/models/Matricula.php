@@ -29,19 +29,6 @@ class Matricula{
         $_SESSION["matriculas"][] = $matricula;
     }
 
-    // public static function editar($id, $niaEstudiante, $idCurso){
-    //     foreach($_SESSION["matriculas"] as $indice => $mat){
-    //         if($mat->id === $id){
-    //             //Actualizar los datos si se le en sesión
-    //             $_SESSION["matriculas"][$indice]->niaEstudiante = $niaEstudiante;
-    //             $_SESSION["matriculas"][$indice]->idCurso = $idCurso;
-
-    //             return $_SESSION["matriculas"][$indice];
-    //         }
-    //     }
-    //     return null; //En caso de que no haya un matricula con ese id
-    // }
-
     public static function eliminar($id){
         foreach($_SESSION["matriculas"] as $indice=> $mat){
             if($mat->id == $id){

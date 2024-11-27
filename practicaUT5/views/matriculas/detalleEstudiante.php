@@ -28,12 +28,6 @@
                     <td><?=  $niaEstudiante ?></td>
                     <td><?=  $matri->idCurso ?></td>
                     <td><?=  $matri->fecha->format("Y-m-d")?></td>
-                    <!-- <td>
-                        <a href="index.php?controller=matricula&action=detalleEstudiante&niaEstudiante=<?=$niaEstudiante?>">Detalle Estudiante</a>
-                    </td>
-                    <td>
-                        <a href="index.php?controller=matricula&action=detalleCurso&idCurso=<?=$matri->idCurso?>">Detalle Curso</a>
-                    </td> -->
                     <td>
                         <a href="index.php?controller=matricula&action=eliminar&id=<?= $matri->id?>">Eliminar</a>
                     </td>
